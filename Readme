@@ -1,0 +1,62 @@
+# Linux Package Management with APT: Installing Security Tools
+
+A hands-on lab in a Debian-based Linux Bash shell: managing applications with the Advanced Package Tool (APT) and `sudo`, using two network security tools, **nload** and **tcpdump**, as the working example.
+
+## Scenario
+
+As a security analyst, I needed `nload` and `tcpdump` on my system. The task: install, uninstall, and reinstall them, then verify each step.
+
+## Tools
+
+| Tool | Purpose |
+|------|---------|
+| `apt` | Package manager for Debian-based systems |
+| `sudo` | Elevated privileges, required to install/remove software |
+| `nload` | Monitors network traffic and bandwidth in real time |
+| `tcpdump` | Captures and analyzes network packets from the command line |
+
+## Workflow
+
+### 1. Confirm APT is installed
+```bash
+apt
+```
+Prints version and usage info when APT is present.
+
+### 2. Install and uninstall nload
+```bash
+sudo apt install nload     # install
+nload -h                   # verify: prints version and usage
+sudo apt remove nload      # uninstall
+nload -h                   # verify removal: "No such file or directory"
+```
+
+### 3. Install tcpdump
+```bash
+sudo apt install tcpdump
+```
+
+### 4. List installed packages
+```bash
+apt list --installed
+```
+`tcpdump` appears as `[installed]`; `nload` does not, since it was removed.
+
+### 5. Reinstall nload and verify
+```bash
+sudo apt install nload
+apt list --installed
+```
+Both `nload` and `tcpdump` now show as `[installed]`.
+
+## Key Takeaways
+
+- `apt install` / `apt remove` need `sudo`: system-level changes require elevated privileges.
+- APT resolves and installs **dependencies** automatically.
+- Verifying matters: run the tool (`nload -h`) and check `apt list --installed` rather than assuming success.
+- Installing, removing and auditing software is a core day-to-day skill for security analysts.
+
+## Environment
+
+- Debian-based Linux virtual machine (isolated, so tools can't damage a real system)
+- Bash shell
